@@ -6,8 +6,10 @@ from sqlalchemy.orm import relationship
 from models.city import City
 import os
 import models
-
+# from models import mapper_registry  # Importing mapper_registry from __init__.py
 STORAGE = os.getenv("HBNB_TYPE_STORAGE")
+# Import the mapper_registry
+
 
 
 class State(BaseModel, Base):
@@ -21,12 +23,13 @@ class State(BaseModel, Base):
     else:
         name = ""
 
-    @property
-    def cities(self):
-        """Getter attribute for cities that returns the list of City instances
-        with state_id equals to the current State.id
-        """
-        return [city for city in models.storage.all(
-            "City").values() if city.state_id == self.id]
+
+        @property
+        def cities(self):
+            """Getter attribute for cities that returns the list of City instances
+            with state_id equals to the current State.id
+            """
+            return [city for city in models.storage.all(
+                "City").values() if city.state_id == self.id]
 
 
