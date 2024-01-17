@@ -145,6 +145,9 @@ class HBNBCommand(cmd.Cmd):
         print(new_instance.id)
 
 
+
+
+
     # def do_create(self, args):
     #     # """
     #     # Create an instance of a specified class.
@@ -493,16 +496,14 @@ class HBNBCommand(cmd.Cmd):
         print("[Usage]: destroy <className> <objectId>\n")
 
     def do_all(self, args):
-        """Show information about all instances or instances of a class."""
+        """ Shows all objects, or all objects of a class"""
         print_list = []
 
         if args:
-            args = args.split(' ')[0]
-
+            args = args.split(' ')[0]  # remove possible trailing args
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-
             for k, v in storage.all().items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
