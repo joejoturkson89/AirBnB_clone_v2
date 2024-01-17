@@ -118,54 +118,81 @@ class HBNBCommand(cmd.Cmd):
         """Overrides the emptyline method of CMD."""
         pass
 
-    def do_create(self, args):
-        """
-        Create an instance of a specified class.
-
-        Usage: create <class_name> [<attribute_name>="<attribute_value>" ...]
-        """
-        if not args:
+    def do_create(self, arg):
+        """Creates a new instance of a specified class"""
+        if not arg:
             print("** class name missing **")
             return
 
-        try:
-            class_name, *attributes = shlex.split(args)
-            class_name = class_name.strip()
+        class_name, *attributes = arg.split()
+        if class_name not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return
 
-            if class_name not in HBNBCommand.classes:
-                print("** class doesn't exist **")
-                return
+        # Create an instance of the specified class
+        new_instance = HBNBCommand.classes[class_name]()
 
-            attribute_dict = {}
-            for attribute in attributes:
-                name, _, value = attribute.partition("=")
-                name = name.strip()
-                value = value.strip()
+        # Parse the attributes and their values
+        for attribute in attributes:
+            key, value = attribute.split("=")
+            # Remove double quotes around the value if present
+            value = value.strip('\"')
+            # Set the attribute of the instance
+            setattr(new_instance, key, value)
 
-                if name not in HBNBCommand.ignored_attributes:
-                    if name in HBNBCommand.types:
-                        try:
-                            value = HBNBCommand.types[name](value)
-                        except ValueError:
-                            print(f"Invalid value for attribute '{name}'")
-                            return
+        # Save the instance to the storage
+        new_instance.save()
+        print(new_instance.id)
 
-                    attribute_dict[name] = value
 
-            new_instance = HBNBCommand.classes[class_name](**attribute_dict)
+    # def do_create(self, args):
+    #     # """
+    #     # Create an instance of a specified class.
 
-            if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-                new_instance.save()
-                print(new_instance.id)
-            else:
-                storage.new(new_instance)
-                storage.save()
-                print(new_instance.id)
+    #     # Usage: create <class_name> [<attribute_name>="<attribute_value>" ...]
+    #     # """
+    #     if not args:
+    #         print("** class name missing **")
+    #         return
 
-        except Exception as e:
-            print(f"Error: {e}")
-            import traceback
-            traceback.print_exc()
+    #     try:
+    #         class_name, *attributes = shlex.split(args)
+    #         class_name = class_name.strip()
+
+    #         if class_name not in HBNBCommand.classes:
+    #             print("** class doesn't exist **")
+    #             return
+
+    #         attribute_dict = {}
+    #         for attribute in attributes:
+    #             name, _, value = attribute.partition("=")
+    #             name = name.strip()
+    #             value = value.strip()
+
+    #             if name not in HBNBCommand.ignored_attributes:
+    #                 if name in HBNBCommand.types:
+    #                     try:
+    #                         value = HBNBCommand.types[name](value)
+    #                     except ValueError:
+    #                         print(f"Invalid value for attribute '{name}'")
+    #                         return
+
+    #                 attribute_dict[name] = value
+
+    #         new_instance = HBNBCommand.classes[class_name](**attribute_dict)
+
+    #         if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    #             new_instance.save()
+    #             print(new_instance.id)
+    #         else:
+    #             storage.new(new_instance)
+    #             storage.save()
+    #             print(new_instance.id)
+
+    #     except Exception as e:
+    #         print(f"Error: {e}")
+    #         import traceback
+    #         traceback.print_exc()
 
 
     # def do_create(self, args):
