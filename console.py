@@ -39,7 +39,7 @@ class HBNBCommand(cmd.Cmd):
         'latitude': float, 'longitude': float
     }
 
-     # Define ignored_attributes
+    # Define ignored_attributes
     ignored_attributes = ('id', 'created_at', 'updated_at', '__class__')
 
     def preloop(self):
@@ -143,10 +143,6 @@ class HBNBCommand(cmd.Cmd):
         # Save the instance to the storage
         new_instance.save()
         print(new_instance.id)
-
-
-
-
 
     # def do_create(self, args):
     #     # """
