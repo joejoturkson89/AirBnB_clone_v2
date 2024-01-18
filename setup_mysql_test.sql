@@ -1,4 +1,4 @@
--- mysql setup test
+-- MySQL setup test
 -- Create or use an existing database hbnb_test_db
 CREATE DATABASE IF NOT EXISTS hbnb_test_db;
 
