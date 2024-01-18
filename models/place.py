@@ -35,7 +35,8 @@ class Place(BaseModel, Base):
     longitude = Column(Float, nullable=True)
     reviews = relationship('Review', backref='place',
                            cascade='all, delete, delete-orphan')
-    amenities = relationship('Amenity', secondary='place_amenity', viewonly=False)
+    amenities = relationship(
+        'Amenity', secondary='place_amenity', viewonly=False)
 
     # For FileStorage
     @property
@@ -46,4 +47,3 @@ class Place(BaseModel, Base):
     def amenity_ids(self, amenity_obj):
         if isinstance(amenity_obj, Amenity):
             self.amenities.append(amenity_obj)
-
