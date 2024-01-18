@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """This module defines the DBStorage class."""
 # from models.amenity import Amenity
-# from models.review import Review
+from models.review import Review
 from models.place import Place
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -30,7 +30,7 @@ class DBStorage:
 
     def all(self, cls=None):
         """Queries on the current database session"""
-        classes = [User, State, City, Place]
+        classes = [User, State, City, Place, Review]
 
         if cls:
             classes = [cls]
