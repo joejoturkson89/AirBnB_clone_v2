@@ -5,6 +5,19 @@ from sqlalchemy import Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
 
 
+class PlaceAmenity(Base):
+    """
+    Association table for Place and Amenity
+    Many-To-Many relationship
+    """
+    __tablename__ = 'place_amenity'
+
+    place_id = Column(String(60), ForeignKey('places.id'),
+                      primary_key=True, nullable=False)
+    amenity_id = Column(String(60), ForeignKey('amenities.id'),
+                        primary_key=True, nullable=False)
+
+
 class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = 'places'
@@ -21,3 +34,5 @@ class Place(BaseModel, Base):
     longitude = Column(Float, nullable=True)
     reviews = relationship('Review', backref='place',
                            cascade='all, delete, delete-orphan')
+    amenities = relationship('Amenity', secondary='place_amenity',
+                             backref='places', viewonly=False)
