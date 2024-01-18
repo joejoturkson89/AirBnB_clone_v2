@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Console Module for HBNB project."""
+"""This is a console Module for HBNB project."""
 import cmd
 import sys
 import re
