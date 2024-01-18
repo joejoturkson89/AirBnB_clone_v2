@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """This module defines the DBStorage class."""
-
-
-"""This module defines the DBStorage engine for HBNB"""
+# from models.amenity import Amenity
+# from models.review import Review
+from models.place import Place
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker, scoped_session
 import os
@@ -10,9 +10,6 @@ from models.base_model import Base
 from models.user import User
 from models.state import State
 from models.city import City
-# from models.amenity import Amenity
-# from models.place import Place
-# from models.review import Review
 
 
 class DBStorage:
@@ -33,7 +30,7 @@ class DBStorage:
 
     def all(self, cls=None):
         """Queries on the current database session"""
-        classes = [User, State, City,]
+        classes = [User, State, City, Place]
 
         if cls:
             classes = [cls]
