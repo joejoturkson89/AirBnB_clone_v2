@@ -7,7 +7,7 @@ import tarfile
 
 
 def do_pack():
-    
+
     try:
         name = "web_static_" + datetime.now().strftime("%Y%m%d%H%M%S")
         local('mkdir -p versions')
@@ -16,5 +16,5 @@ def do_pack():
         size = os.path.getsize("./versions/{}.tgz".format(name))
         print("web_static packed: versions/{}.tgz -> {}Bytes".format(
             name, size))
-    except:
+    except Exception:
         return None
