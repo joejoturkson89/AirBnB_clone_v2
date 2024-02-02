@@ -8,7 +8,6 @@ import tarfile
 
 env.hosts = ["52.72.30.141", "54.87.253.86"]
 env.user = 'ubuntu'
-env.key_filename = '~/.ssh/holberton'
 
 
 def do_pack():
@@ -40,6 +39,4 @@ def do_deploy(archive_path):
         /data/web_static/current'.format(fd))
         print("New version deployed!")
         return True
-    except Exception:
-        print("New version not deployed...")
-        return False
+    return False
